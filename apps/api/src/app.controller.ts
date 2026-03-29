@@ -8,6 +8,7 @@ export class AppController {
       project: 'Sidra Specialized Hospital API',
       status: 'running',
       version: '1.0.0',
+      prefix: '/api',
       timestamp: new Date().toISOString(),
     };
   }
