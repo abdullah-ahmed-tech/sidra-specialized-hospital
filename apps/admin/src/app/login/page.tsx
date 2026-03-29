@@ -1,6 +1,33 @@
-import Link from "next/link";
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { loginAdmin } from '@/lib/api';
+import { setAccessToken } from '@/lib/auth';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState('admin@sidra.com');
+  const [password, setPassword] = useState('123456');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const result = await loginAdmin(email, password);
+      setAccessToken(result.accessToken);
+      router.push('/dashboard');
+    } catch {
+      setError('Invalid login credentials.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 text-white">
       <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 lg:grid-cols-2">
@@ -20,12 +47,13 @@ export default function LoginPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                   <label className="text-sm text-slate-300">Email</label>
                   <input
                     type="email"
-                    defaultValue="admin@sidra.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none transition focus:border-cyan-400/40"
                   />
                 </div>
@@ -34,24 +62,23 @@ export default function LoginPage() {
                   <label className="text-sm text-slate-300">Password</label>
                   <input
                     type="password"
-                    defaultValue="123456"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none transition focus:border-cyan-400/40"
                   />
                 </div>
 
-                <Link
-                  href="/dashboard"
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400"
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Enter Dashboard
-                </Link>
+                  {loading ? 'Signing in...' : 'Enter Dashboard'}
+                </button>
+
+                {error ? <p className="text-sm text-rose-400">{error}</p> : null}
               </form>
             </div>
-
-            <p className="text-sm text-slate-500">
-              Demo credentials are prefilled for this stage. Real auth guard and
-              token persistence will be hardened in the next integration stage.
-            </p>
           </div>
         </section>
 
@@ -74,16 +101,6 @@ export default function LoginPage() {
                 <p className="text-sm text-slate-400">Commercial Quality</p>
                 <p className="mt-3 text-3xl font-bold text-white">Ready</p>
               </div>
-            </div>
-
-            <div className="mt-6 rounded-3xl border border-cyan-400/20 bg-cyan-400/10 p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">
-                Phase 3 Output
-              </p>
-              <p className="mt-3 text-base leading-8 text-slate-200">
-                This sprint delivers a premium admin shell connected to live API
-                data, preparing the platform for full operational management.
-              </p>
             </div>
           </div>
         </section>

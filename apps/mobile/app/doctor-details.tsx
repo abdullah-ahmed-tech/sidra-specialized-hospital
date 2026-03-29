@@ -20,7 +20,7 @@ export default function DoctorDetailsPage() {
     <Screen>
       <SectionTitle
         eyebrow="Doctor"
-        title={params.name || "Doctor Details"}
+        title={params.name || 'Doctor Details'}
         description="Professional doctor presentation improves patient trust and booking conversion."
       />
 
@@ -28,7 +28,7 @@ export default function DoctorDetailsPage() {
         <Text style={styles.specialty}>{params.specialty}</Text>
         <Text style={styles.meta}>{params.department}</Text>
         <Text style={styles.bio}>
-          {params.bio || "Experienced specialist within Sidra Specialized Hospital."}
+          {params.bio || 'Experienced specialist within Sidra Specialized Hospital.'}
         </Text>
       </Card>
 
@@ -36,7 +36,7 @@ export default function DoctorDetailsPage() {
         label="Book Appointment"
         onPress={() =>
           router.push({
-            pathname: "/book-appointment",
+            pathname: '/book-appointment',
             params: {
               doctorId: params.id,
               doctorName: params.name,
@@ -51,7 +51,7 @@ export default function DoctorDetailsPage() {
 const styles = StyleSheet.create({
   specialty: {
     fontSize: 20,
-    fontWeight: "700",
+    fontWeight: '700',
     color: colors.primary,
   },
   meta: {

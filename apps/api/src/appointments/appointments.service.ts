@@ -19,6 +19,22 @@ export class AppointmentsService {
         appointmentDate: new Date(dto.appointmentDate),
         status: AppointmentStatus.PENDING,
       },
+      include: {
+        patient: {
+          select: {
+            id: true,
+            fullName: true,
+            email: true,
+            phone: true,
+          },
+        },
+        doctor: {
+          include: {
+            user: true,
+            department: true,
+          },
+        },
+      },
     });
   }
 
@@ -47,6 +63,22 @@ export class AppointmentsService {
   findOne(id: string) {
     return this.prisma.appointment.findUnique({
       where: { id },
+      include: {
+        patient: true,
+        doctor: {
+          include: {
+            user: true,
+            department: true,
+          },
+        },
+      },
+    });
+  }
+
+  updateStatus(id: string, status: AppointmentStatus) {
+    return this.prisma.appointment.update({
+      where: { id },
+      data: { status },
       include: {
         patient: true,
         doctor: {

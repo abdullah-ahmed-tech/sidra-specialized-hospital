@@ -1,16 +1,16 @@
-import type { Department, Doctor, Service } from "./types";
+import type { Department, Doctor, Service } from './types';
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...(options?.headers || {}),
     },
-    cache: "no-store",
+    cache: 'no-store',
   });
 
   if (!response.ok) {
@@ -22,19 +22,18 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export async function getDepartments() {
-  return apiFetch<Department[]>("/departments");
+  return apiFetch<Department[]>('/departments');
 }
 
 export async function getDoctors() {
-  return apiFetch<Doctor[]>("/doctors");
+  return apiFetch<Doctor[]>('/doctors');
 }
 
 export async function getServices() {
-  return apiFetch<Service[]>("/services");
+  return apiFetch<Service[]>('/services');
 }
 
 export async function createAppointment(payload: {
-  patientId: string;
   doctorId: string;
   fullName: string;
   phone: string;
@@ -42,8 +41,8 @@ export async function createAppointment(payload: {
   notes?: string;
   appointmentDate: string;
 }) {
-  return apiFetch("/appointments", {
-    method: "POST",
+  return apiFetch('/appointments', {
+    method: 'POST',
     body: JSON.stringify(payload),
   });
 }

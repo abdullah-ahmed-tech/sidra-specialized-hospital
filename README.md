@@ -1,10 +1,29 @@
 # Sidra Specialized Hospital Platform
 
-Commercial-grade hospital platform designed to support:
-- patient mobile application
-- official hospital website
-- administrative dashboard
-- centralized backend API
+A commercial-grade hospital platform designed for showcase, client delivery, and future expansion.
+
+## Products
+- Patient Mobile App
+- Official Hospital Website
+- Admin Dashboard
+- Central Backend API
+
+## Stack
+- Expo React Native
+- Next.js
+- NestJS
+- PostgreSQL
+- Prisma
+- Tailwind CSS
+
+## Core Features
+- doctor directory
+- departments
+- services
+- appointment booking
+- admin operations
+- dashboard metrics
+- role-ready backend architecture
 
 ## Monorepo Structure
 - apps/mobile
@@ -16,27 +35,10 @@ Commercial-grade hospital platform designed to support:
 - packages/utils
 - packages/config
 
-## Stack
-- Expo React Native
-- Next.js
-- NestJS
-- PostgreSQL
-- Prisma
-- Tailwind CSS
-
-## Project Goals
-- Build a premium digital hospital platform
-- Deliver a product suitable for showcase and sale
-- Keep architecture modular and scalable
-- Support future medical and operational modules
-
-## Current Phase
-Phase 1: Foundation and architecture
-
-## Run Commands
+## Run
 ```bash
 pnpm install
-pnpm dev:website
-pnpm dev:admin
 pnpm dev:api
+pnpm dev:admin
+pnpm dev:website
 pnpm dev:mobile
