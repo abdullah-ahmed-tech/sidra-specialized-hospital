@@ -3,15 +3,18 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardShell } from '@/components/layout/dashboard-shell';
-import { DepartmentsTable } from '@/components/departments/departments-table';
-import { SectionHeading } from '@/components/shared/section-heading';
+import { AnimatedContainer } from '@/components/shared/animated-container';
 import { getAccessToken } from '@/lib/auth';
-import { getDepartments } from '@/lib/api';
-import { Department } from '@/lib/types';
+import { getDepartments, getDoctors, getServices } from '@/lib/api';
+import { Department, Doctor, Service } from '@/lib/types';
+import { DepartmentsManagementView } from '@/components/departments/departments-management-view';
 
 export default function DepartmentsPage() {
   const router = useRouter();
+
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -27,8 +30,16 @@ export default function DepartmentsPage() {
       try {
         setLoading(true);
         setError('');
-        const data = await getDepartments();
-        setDepartments(data);
+
+        const [departmentsData, doctorsData, servicesData] = await Promise.all([
+          getDepartments(),
+          getDoctors(),
+          getServices(),
+        ]);
+
+        setDepartments(departmentsData);
+        setDoctors(doctorsData);
+        setServices(servicesData);
       } catch (err) {
         console.error(err);
         setError('Failed to load departments.');
@@ -43,12 +54,6 @@ export default function DepartmentsPage() {
   return (
     <DashboardShell>
       <div className="space-y-8">
-        <SectionHeading
-          eyebrow="Management"
-          title="Departments"
-          description="View medical departments already stored in the API and prepared for administration."
-        />
-
         {loading ? (
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-sm text-slate-400">
             Loading departments...
@@ -58,7 +63,13 @@ export default function DepartmentsPage() {
             {error}
           </div>
         ) : (
-          <DepartmentsTable departments={departments} />
+          <AnimatedContainer delay={0}>
+            <DepartmentsManagementView
+              departments={departments}
+              doctors={doctors}
+              services={services}
+            />
+          </AnimatedContainer>
         )}
       </div>
     </DashboardShell>

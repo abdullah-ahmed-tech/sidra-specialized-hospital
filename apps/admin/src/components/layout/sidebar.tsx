@@ -14,9 +14,10 @@ export function Sidebar() {
       <div className="sticky top-0 flex h-screen flex-col">
         <div className="border-b border-white/10 px-6 py-6">
           <div className="flex items-center gap-3">
-            <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-3 text-cyan-300">
+            <div className="rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/20 to-blue-500/10 p-3 text-cyan-300 shadow-[0_12px_30px_rgba(6,182,212,0.18)]">
               <ShieldPlus className="h-6 w-6" />
             </div>
+
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-cyan-400">
                 Sidra
@@ -40,13 +41,18 @@ export function Sidebar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition",
+                    "group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition",
                     active
-                      ? "bg-cyan-400/10 text-white ring-1 ring-cyan-400/20"
+                      ? "bg-cyan-400/10 text-white ring-1 ring-cyan-400/20 shadow-[0_10px_30px_rgba(6,182,212,0.12)]"
                       : "text-slate-400 hover:bg-white/5 hover:text-white"
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon
+                    className={cn(
+                      "h-5 w-5 transition",
+                      active ? "text-cyan-300" : "text-slate-500 group-hover:text-cyan-300"
+                    )}
+                  />
                   <span>{item.title}</span>
                 </Link>
               );
@@ -55,13 +61,14 @@ export function Sidebar() {
         </nav>
 
         <div className="border-t border-white/10 p-4">
-          <div className="rounded-3xl bg-white/[0.04] p-4">
-            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-4">
+            <div className="absolute right-0 top-0 h-20 w-20 rounded-full bg-cyan-500/10 blur-2xl" />
+            <p className="relative text-xs uppercase tracking-[0.18em] text-slate-500">
               Commercial Build
             </p>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Hospital-grade operations panel for departments, doctors, services,
-              and patient appointments.
+            <p className="relative mt-2 text-sm leading-6 text-slate-300">
+              Hospital-grade operations panel with stronger visual depth,
+              consistent identity, and premium presentation.
             </p>
           </div>
         </div>

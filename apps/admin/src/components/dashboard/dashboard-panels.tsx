@@ -17,13 +17,20 @@ export function DashboardPanels({
 }: DashboardPanelsProps) {
   return (
     <div className="grid grid-cols-1 gap-6 2xl:grid-cols-3">
-      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+      <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+        <div
+          className="mb-5 h-40 rounded-[1.5rem] bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(2,6,23,0.35), rgba(2,6,23,0.6)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80')",
+          }}
+        />
         <h3 className="text-lg font-semibold text-white">Recent Departments</h3>
         <div className="mt-5 space-y-4">
           {departments.slice(0, 4).map((department) => (
             <div
               key={department.id}
-              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 transition hover:bg-slate-900/80"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -42,33 +49,61 @@ export function DashboardPanels({
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+      <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+        <div
+          className="mb-5 h-40 rounded-[1.5rem] bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(2,6,23,0.35), rgba(2,6,23,0.6)), url('https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=1200&q=80')",
+          }}
+        />
         <h3 className="text-lg font-semibold text-white">Doctor Snapshot</h3>
         <div className="mt-5 space-y-4">
           {doctors.slice(0, 4).map((doctor) => (
             <div
               key={doctor.id}
-              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 transition hover:bg-slate-900/80"
             >
-              <p className="font-semibold text-white">{doctor.user.fullName}</p>
-              <p className="mt-1 text-sm text-slate-400">
-                {doctor.specialty} · {doctor.department.name}
-              </p>
-              <p className="mt-2 text-xs text-slate-500">
-                Fee: {formatMoney(doctor.consultationFee)}
-              </p>
+              <div className="flex items-start gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 text-sm font-bold text-slate-950">
+                  {doctor.user.fullName
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((part) => part[0])
+                    .join("")}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-white">
+                    {doctor.user.fullName}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-400">
+                    {doctor.specialty} · {doctor.department.name}
+                  </p>
+                  <p className="mt-2 text-xs text-slate-500">
+                    Fee: {formatMoney(doctor.consultationFee)}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+      <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 2xl:col-span-1">
+        <div
+          className="mb-5 h-40 rounded-[1.5rem] bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(2,6,23,0.35), rgba(2,6,23,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80')",
+          }}
+        />
         <h3 className="text-lg font-semibold text-white">Upcoming Activity</h3>
         <div className="mt-5 space-y-4">
           {appointments.slice(0, 4).map((appointment) => (
             <div
               key={appointment.id}
-              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 transition hover:bg-slate-900/80"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -101,19 +136,30 @@ export function DashboardPanels({
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 2xl:col-span-3">
-        <h3 className="text-lg font-semibold text-white">Services Catalog</h3>
-        <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 2xl:col-span-3">
+        <div className="mb-5 flex items-center justify-between gap-4">
+          <h3 className="text-lg font-semibold text-white">Services Catalog</h3>
+          <div className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-300">
+            Live Data
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {services.slice(0, 6).map((service) => (
             <div
               key={service.id}
-              className="rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+              className="rounded-[1.5rem] border border-white/10 bg-slate-900/60 p-4 transition hover:-translate-y-1 hover:bg-slate-900/80"
             >
               <p className="font-semibold text-white">{service.name}</p>
               <p className="mt-1 text-sm text-slate-400">
                 {service.department.name}
               </p>
-              <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+              <p className="mt-3 text-sm leading-6 text-slate-500">
+                {service.shortDescription ||
+                  service.description ||
+                  "Clinical service ready for publishing and operational review."}
+              </p>
+              <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                 <span>{service.durationMinutes || "--"} mins</span>
                 <span>{formatMoney(service.price)}</span>
               </div>

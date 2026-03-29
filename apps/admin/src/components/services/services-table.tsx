@@ -14,7 +14,7 @@ export function ServicesTable({ services }: { services: Service[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+    <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
       <div className="overflow-x-auto">
         <table className="min-w-full text-left">
           <thead className="bg-white/[0.03]">
@@ -30,7 +30,7 @@ export function ServicesTable({ services }: { services: Service[] }) {
             {services.map((service) => (
               <tr
                 key={service.id}
-                className="border-t border-white/5 text-sm text-slate-300"
+                className="border-t border-white/5 text-sm text-slate-300 transition hover:bg-white/[0.03]"
               >
                 <td className="px-6 py-4">
                   <p className="font-semibold text-white">{service.name}</p>
@@ -39,7 +39,9 @@ export function ServicesTable({ services }: { services: Service[] }) {
                   </p>
                 </td>
                 <td className="px-6 py-4">{service.department.name}</td>
-                <td className="px-6 py-4">{service.durationMinutes || "--"} mins</td>
+                <td className="px-6 py-4">
+                  {service.durationMinutes || "--"} mins
+                </td>
                 <td className="px-6 py-4">{formatMoney(service.price)}</td>
                 <td className="px-6 py-4">
                   <StatusBadge

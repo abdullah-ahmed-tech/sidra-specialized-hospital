@@ -6,6 +6,7 @@ import { DashboardShell } from '@/components/layout/dashboard-shell';
 import { DashboardPanels } from '@/components/dashboard/dashboard-panels';
 import { OverviewGrid } from '@/components/dashboard/overview-grid';
 import { SectionHeading } from '@/components/shared/section-heading';
+import { AnimatedContainer } from '@/components/shared/animated-container';
 import { getAccessToken } from '@/lib/auth';
 import {
   getAppointments,
@@ -45,14 +46,19 @@ export default function DashboardPage() {
         setLoading(true);
         setError('');
 
-        const [metricsData, departmentsData, doctorsData, servicesData, appointmentsData] =
-          await Promise.all([
-            getDashboardMetrics(),
-            getDepartments(),
-            getDoctors(),
-            getServices(),
-            getAppointments(),
-          ]);
+        const [
+          metricsData,
+          departmentsData,
+          doctorsData,
+          servicesData,
+          appointmentsData,
+        ] = await Promise.all([
+          getDashboardMetrics(),
+          getDepartments(),
+          getDoctors(),
+          getServices(),
+          getAppointments(),
+        ]);
 
         setMetrics(metricsData);
         setDepartments(departmentsData);
@@ -73,11 +79,44 @@ export default function DashboardPage() {
   return (
     <DashboardShell>
       <div className="space-y-8">
-        <SectionHeading
-          eyebrow="Dashboard"
-          title="Hospital Operations Overview"
-          description="Live operational snapshot connected to the backend foundation."
-        />
+        <AnimatedContainer delay={0}>
+          <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl" />
+
+            <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[1.4fr_0.9fr]">
+              <div>
+                <SectionHeading
+                  eyebrow="Dashboard"
+                  title="Hospital Operations Overview"
+                  description="Live operational snapshot connected to the backend foundation with a stronger premium visual presentation."
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
+                  <p className="text-sm text-slate-400">Today Focus</p>
+                  <p className="mt-2 text-3xl font-bold text-white">
+                    {metrics.appointments}
+                  </p>
+                  <p className="mt-2 text-xs text-slate-500">
+                    Total appointment records
+                  </p>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
+                  <p className="text-sm text-slate-400">Clinical Reach</p>
+                  <p className="mt-2 text-3xl font-bold text-white">
+                    {metrics.departments + metrics.doctors}
+                  </p>
+                  <p className="mt-2 text-xs text-slate-500">
+                    Departments + doctors
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </AnimatedContainer>
 
         {loading ? (
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-sm text-slate-400">
@@ -89,19 +128,23 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            <OverviewGrid
-              departmentsCount={metrics.departments}
-              doctorsCount={metrics.doctors}
-              servicesCount={metrics.services}
-              appointmentsCount={metrics.appointments}
-            />
+            <AnimatedContainer delay={0.08}>
+              <OverviewGrid
+                departmentsCount={metrics.departments}
+                doctorsCount={metrics.doctors}
+                servicesCount={metrics.services}
+                appointmentsCount={metrics.appointments}
+              />
+            </AnimatedContainer>
 
-            <DashboardPanels
-              departments={departments}
-              doctors={doctors}
-              services={services}
-              appointments={appointments}
-            />
+            <AnimatedContainer delay={0.14}>
+              <DashboardPanels
+                departments={departments}
+                doctors={doctors}
+                services={services}
+                appointments={appointments}
+              />
+            </AnimatedContainer>
           </>
         )}
       </div>

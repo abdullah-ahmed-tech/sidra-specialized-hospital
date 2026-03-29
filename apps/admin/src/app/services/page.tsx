@@ -3,15 +3,17 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardShell } from '@/components/layout/dashboard-shell';
-import { ServicesTable } from '@/components/services/services-table';
-import { SectionHeading } from '@/components/shared/section-heading';
+import { AnimatedContainer } from '@/components/shared/animated-container';
 import { getAccessToken } from '@/lib/auth';
-import { getServices } from '@/lib/api';
-import { Service } from '@/lib/types';
+import { getServices, getDepartments } from '@/lib/api';
+import { Service, Department } from '@/lib/types';
+import { ServicesManagementView } from '@/components/services/services-management-view';
 
 export default function ServicesPage() {
   const router = useRouter();
+
   const [services, setServices] = useState<Service[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -27,8 +29,14 @@ export default function ServicesPage() {
       try {
         setLoading(true);
         setError('');
-        const data = await getServices();
-        setServices(data);
+
+        const [servicesData, departmentsData] = await Promise.all([
+          getServices(),
+          getDepartments(),
+        ]);
+
+        setServices(servicesData);
+        setDepartments(departmentsData);
       } catch (err) {
         console.error(err);
         setError('Failed to load services.');
@@ -43,12 +51,6 @@ export default function ServicesPage() {
   return (
     <DashboardShell>
       <div className="space-y-8">
-        <SectionHeading
-          eyebrow="Management"
-          title="Services"
-          description="Clinical services are listed here for commercial and operational review."
-        />
-
         {loading ? (
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-sm text-slate-400">
             Loading services...
@@ -58,7 +60,12 @@ export default function ServicesPage() {
             {error}
           </div>
         ) : (
-          <ServicesTable services={services} />
+          <AnimatedContainer delay={0}>
+            <ServicesManagementView
+              services={services}
+              departments={departments}
+            />
+          </AnimatedContainer>
         )}
       </div>
     </DashboardShell>

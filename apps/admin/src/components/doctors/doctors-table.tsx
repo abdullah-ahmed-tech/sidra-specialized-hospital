@@ -14,7 +14,7 @@ export function DoctorsTable({ doctors }: { doctors: Doctor[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+    <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
       <div className="overflow-x-auto">
         <table className="min-w-full text-left">
           <thead className="bg-white/[0.03]">
@@ -31,15 +31,33 @@ export function DoctorsTable({ doctors }: { doctors: Doctor[] }) {
             {doctors.map((doctor) => (
               <tr
                 key={doctor.id}
-                className="border-t border-white/5 text-sm text-slate-300"
+                className="border-t border-white/5 text-sm text-slate-300 transition hover:bg-white/[0.03]"
               >
                 <td className="px-6 py-4">
-                  <p className="font-semibold text-white">{doctor.user.fullName}</p>
-                  <p className="mt-1 text-xs text-slate-500">{doctor.user.email}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 text-sm font-bold text-slate-950">
+                      {doctor.user.fullName
+                        .split(" ")
+                        .slice(0, 2)
+                        .map((part) => part[0])
+                        .join("")}
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-white">
+                        {doctor.user.fullName}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-500">
+                        {doctor.user.email}
+                      </p>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-6 py-4">{doctor.department.name}</td>
                 <td className="px-6 py-4">{doctor.specialty}</td>
-                <td className="px-6 py-4">{formatMoney(doctor.consultationFee)}</td>
+                <td className="px-6 py-4">
+                  {formatMoney(doctor.consultationFee)}
+                </td>
                 <td className="px-6 py-4 text-slate-400">
                   {doctor.languages?.length ? doctor.languages.join(", ") : "--"}
                 </td>
