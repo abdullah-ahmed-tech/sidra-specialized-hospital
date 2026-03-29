@@ -1,14 +1,23 @@
-import { SiteShell } from "@/components/layout/site-shell";
-import { AppointmentForm } from "@/components/sections/appointment-form";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { getDoctors } from "@/lib/api";
+import { SiteShell } from '@/components/layout/site-shell';
+import { AppointmentForm } from '@/components/sections/appointment-form';
+import { SectionHeading } from '@/components/shared/section-heading';
+import { getDoctors } from '@/lib/api';
 
-export default async function AppointmentsPage() {
+interface AppointmentsPageProps {
+  searchParams: Promise<{
+    doctorId?: string;
+  }>;
+}
+
+export default async function AppointmentsPage({
+  searchParams,
+}: AppointmentsPageProps) {
+  const { doctorId } = await searchParams;
   const doctors = await getDoctors();
 
   return (
     <SiteShell>
-      <main className="mx-auto max-w-5xl px-6 py-20">
+      <main className="mx-auto max-w-7xl px-6 py-20">
         <SectionHeading
           eyebrow="Appointments"
           title="Book your appointment"
@@ -17,7 +26,10 @@ export default async function AppointmentsPage() {
         />
 
         <div className="mt-12">
-          <AppointmentForm doctors={doctors} />
+          <AppointmentForm
+            doctors={doctors}
+            preselectedDoctorId={doctorId}
+          />
         </div>
       </main>
     </SiteShell>

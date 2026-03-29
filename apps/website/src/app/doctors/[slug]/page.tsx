@@ -29,44 +29,50 @@ export default async function DoctorDetailsPage({
       <main className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid grid-cols-1 gap-10 xl:grid-cols-[1.1fr_0.9fr]">
           <section className="space-y-8">
+            <div
+              className="h-80 rounded-[2rem] bg-cover bg-center shadow-[0_24px_80px_rgba(15,23,42,0.12)]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(15,23,42,0.12), rgba(15,23,42,0.24)), url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80')",
+              }}
+            />
+
             <SectionHeading
               eyebrow="Doctor Profile"
               title={doctor.user.fullName}
               description="A dedicated doctor profile page that strengthens patient trust and supports direct appointment conversion."
             />
 
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)]">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-700">
-                    Specialty
-                  </p>
-                  <p className="mt-2 text-2xl font-bold text-slate-950">
-                    {doctor.specialty}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-700">
-                    Department
-                  </p>
-                  <p className="mt-2 text-lg font-medium text-slate-800">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
+              <div className="space-y-5">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-sm font-semibold text-cyan-700">
                     {doctor.department.name}
-                  </p>
+                  </span>
+                  <span className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">
+                    {doctor.specialty}
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl bg-slate-50 p-5">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                     <p className="text-sm text-slate-500">Experience</p>
                     <p className="mt-2 text-xl font-bold text-slate-950">
                       {doctor.experienceYears || '--'} years
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-slate-50 p-5">
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                     <p className="text-sm text-slate-500">Consultation Fee</p>
                     <p className="mt-2 text-xl font-bold text-slate-950">
                       {formatMoney(doctor.consultationFee)}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                    <p className="text-sm text-slate-500">Languages</p>
+                    <p className="mt-2 text-xl font-bold text-slate-950">
+                      {doctor.languages?.length || 0}
                     </p>
                   </div>
                 </div>
@@ -103,7 +109,7 @@ export default async function DoctorDetailsPage({
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <Link
                     href="/doctors"
                     className="inline-flex rounded-2xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
@@ -116,7 +122,7 @@ export default async function DoctorDetailsPage({
           </section>
 
           <section className="space-y-6">
-            <div className="rounded-[2rem] bg-slate-950 p-8 text-white">
+            <div className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-[0_20px_60px_rgba(15,23,42,0.14)]">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-400">
                 Book with this doctor
               </p>

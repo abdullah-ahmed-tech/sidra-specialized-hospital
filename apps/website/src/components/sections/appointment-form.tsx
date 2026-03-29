@@ -33,6 +33,11 @@ export function AppointmentForm({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const selectedDoctor = useMemo(
+    () => doctors.find((doctor) => doctor.id === form.doctorId),
+    [doctors, form.doctorId],
+  );
+
   function validateForm() {
     if (!form.doctorId) {
       setErrorMessage('Please select a doctor.');
@@ -100,120 +105,157 @@ export function AppointmentForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)]"
-    >
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Full Name</label>
-          <input
-            value={form.fullName}
-            onChange={(e) =>
-              setForm({ ...form, fullName: e.target.value })
-            }
-            required
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-            placeholder="Enter your full name"
-          />
-        </div>
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+      <aside className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+          Booking Journey
+        </p>
+        <h3 className="mt-4 text-2xl font-bold text-slate-950">
+          Schedule your visit with confidence
+        </h3>
+        <p className="mt-4 text-sm leading-8 text-slate-600">
+          Choose the right doctor, provide your information clearly, and submit
+          a structured request directly into the hospital platform.
+        </p>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Phone</label>
-          <input
-            value={form.phone}
-            onChange={(e) =>
-              setForm({ ...form, phone: e.target.value })
-            }
-            required
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-            placeholder="Enter your phone number"
-          />
-        </div>
+        <div className="mt-6 space-y-4">
+          <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
+              Selected Doctor
+            </p>
+            <p className="mt-2 text-lg font-bold text-slate-950">
+              {selectedDoctor?.user.fullName || 'Choose from the list'}
+            </p>
+            <p className="mt-1 text-sm text-cyan-700">
+              {selectedDoctor?.specialty || 'Specialty will appear here'}
+            </p>
+          </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Email</label>
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
-            }
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-            placeholder="Enter your email"
-          />
-        </div>
+          <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
+              Department
+            </p>
+            <p className="mt-2 text-lg font-bold text-slate-950">
+              {selectedDoctor?.department.name || 'Department will appear here'}
+            </p>
+          </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700">Doctor</label>
-          <select
-            value={form.doctorId}
-            onChange={(e) =>
-              setForm({ ...form, doctorId: e.target.value })
-            }
-            required
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-          >
-            {doctors.length === 0 ? (
-              <option value="">No doctors available</option>
-            ) : (
-              doctors.map((doctor) => (
-                <option key={doctor.id} value={doctor.id}>
-                  {doctor.user.fullName} - {doctor.department.name}
-                </option>
-              ))
-            )}
-          </select>
+          <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-slate-500">
+              Guidance
+            </p>
+            <p className="mt-2 text-sm leading-7 text-slate-600">
+              Enter a clear date and time, provide a reachable phone number, and
+              optionally add notes to make the appointment request easier to
+              review.
+            </p>
+          </div>
         </div>
+      </aside>
 
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-sm font-medium text-slate-700">
-            Appointment Date & Time
-          </label>
-          <input
-            type="datetime-local"
-            value={form.appointmentDate}
-            onChange={(e) =>
-              setForm({ ...form, appointmentDate: e.target.value })
-            }
-            required
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-          />
-        </div>
-
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-sm font-medium text-slate-700">Notes</label>
-          <textarea
-            rows={5}
-            value={form.notes}
-            onChange={(e) =>
-              setForm({ ...form, notes: e.target.value })
-            }
-            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
-            placeholder="Add any medical notes or appointment context"
-          />
-        </div>
-      </div>
-
-      {successMessage ? (
-        <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm leading-7 text-emerald-700">
-          {successMessage}
-        </div>
-      ) : null}
-
-      {errorMessage ? (
-        <div className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-4 text-sm leading-7 text-rose-700">
-          {errorMessage}
-        </div>
-      ) : null}
-
-      <button
-        type="submit"
-        disabled={loading || doctors.length === 0}
-        className="mt-6 inline-flex items-center justify-center rounded-2xl bg-slate-950 px-6 py-4 font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_12px_40px_rgba(15,23,42,0.06)]"
       >
-        {loading ? 'Submitting Request...' : 'Submit Appointment'}
-      </button>
-    </form>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-medium text-slate-700">Doctor</label>
+            <select
+              value={form.doctorId}
+              onChange={(e) => setForm({ ...form, doctorId: e.target.value })}
+              required
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+            >
+              {doctors.length === 0 ? (
+                <option value="">No doctors available</option>
+              ) : (
+                doctors.map((doctor) => (
+                  <option key={doctor.id} value={doctor.id}>
+                    {doctor.user.fullName} - {doctor.department.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Full Name</label>
+            <input
+              value={form.fullName}
+              onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+              required
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+              placeholder="Enter your full name"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Phone</label>
+            <input
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              required
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+              placeholder="Enter your phone number"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Email</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">
+              Appointment Date & Time
+            </label>
+            <input
+              type="datetime-local"
+              value={form.appointmentDate}
+              onChange={(e) => setForm({ ...form, appointmentDate: e.target.value })}
+              required
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-medium text-slate-700">Notes</label>
+            <textarea
+              rows={5}
+              value={form.notes}
+              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-cyan-500"
+              placeholder="Add any medical notes or appointment context"
+            />
+          </div>
+        </div>
+
+        {successMessage ? (
+          <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm leading-7 text-emerald-700">
+            {successMessage}
+          </div>
+        ) : null}
+
+        {errorMessage ? (
+          <div className="mt-6 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-4 text-sm leading-7 text-rose-700">
+            {errorMessage}
+          </div>
+        ) : null}
+
+        <button
+          type="submit"
+          disabled={loading || doctors.length === 0}
+          className="mt-6 inline-flex items-center justify-center rounded-2xl bg-slate-950 px-6 py-4 font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {loading ? 'Submitting Request...' : 'Submit Appointment'}
+        </button>
+      </form>
+    </div>
   );
 }

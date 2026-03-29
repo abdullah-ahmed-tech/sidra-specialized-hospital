@@ -1,8 +1,8 @@
-import { SiteShell } from "@/components/layout/site-shell";
-import { DoctorsGrid } from "@/components/sections/doctors-grid";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { CtaBanner } from "@/components/shared/cta-banner";
-import { getDoctors } from "@/lib/api";
+import { SiteShell } from '@/components/layout/site-shell';
+import { PremiumDoctorsGrid } from '@/components/sections/premium-doctors-grid';
+import { SectionHeading } from '@/components/shared/section-heading';
+import { CtaBanner } from '@/components/shared/cta-banner';
+import { getDoctors } from '@/lib/api';
 
 export default async function DoctorsPage() {
   const doctors = await getDoctors();
@@ -16,9 +16,10 @@ export default async function DoctorsPage() {
           description="Professional presentation of medical staff supports trust and improves appointment conversion."
         />
         <div className="mt-12">
-          <DoctorsGrid doctors={doctors} />
+          <PremiumDoctorsGrid doctors={doctors} />
         </div>
       </main>
+
       <CtaBanner />
     </SiteShell>
   );

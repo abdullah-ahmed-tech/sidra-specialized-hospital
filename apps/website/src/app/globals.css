@@ -12,6 +12,7 @@ html {
 body {
   background:
     radial-gradient(circle at top right, rgba(6, 182, 212, 0.06), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.04), transparent 20%),
     #ffffff;
   color: var(--foreground);
   min-height: 100vh;
@@ -19,4 +20,9 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(6, 182, 212, 0.18);
+  color: #0f172a;
 }
