@@ -1,33 +1,27 @@
-export default function HomePage() {
+import { SiteShell } from "@/components/layout/site-shell";
+import { CtaBanner } from "@/components/shared/cta-banner";
+import { DepartmentsPreview } from "@/components/home/departments-preview";
+import { DoctorsPreview } from "@/components/home/doctors-preview";
+import { HeroSection } from "@/components/home/hero-section";
+import { HighlightsSection } from "@/components/home/highlights-section";
+import { ServicesPreview } from "@/components/home/services-preview";
+import { getDepartments, getDoctors, getServices } from "@/lib/api";
+
+export default async function HomePage() {
+  const [departments, doctors, services] = await Promise.all([
+    getDepartments(),
+    getDoctors(),
+    getServices(),
+  ]);
+
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      <section className="mx-auto flex min-h-screen max-w-7xl items-center px-6 py-20">
-        <div className="max-w-3xl space-y-6">
-          <span className="inline-flex rounded-full bg-sky-100 px-4 py-1 text-sm font-medium text-sky-700">
-            Sidra Specialized Hospital
-          </span>
-
-          <h1 className="text-4xl font-bold leading-tight md:text-6xl">
-            Modern Specialized Healthcare Platform
-          </h1>
-
-          <p className="text-lg leading-8 text-slate-600">
-            Official website foundation for Sidra Specialized Hospital. This
-            application will power the hospital digital presence, service
-            pages, doctor directory, patient trust journey, and appointment
-            acquisition funnel.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <button className="rounded-xl bg-sky-600 px-6 py-3 font-semibold text-white transition hover:bg-sky-700">
-              Book Appointment
-            </button>
-            <button className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50">
-              Explore Departments
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
+    <SiteShell>
+      <HeroSection />
+      <HighlightsSection />
+      <DepartmentsPreview departments={departments} />
+      <DoctorsPreview doctors={doctors} />
+      <ServicesPreview services={services} />
+      <CtaBanner />
+    </SiteShell>
   );
 }

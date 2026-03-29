@@ -10,7 +10,7 @@ export class AppointmentsService {
   create(dto: CreateAppointmentDto) {
     return this.prisma.appointment.create({
       data: {
-        patientId: dto.patientId,
+        patientId: dto.patientId || null,
         doctorId: dto.doctorId,
         fullName: dto.fullName,
         phone: dto.phone,
