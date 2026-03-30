@@ -11,7 +11,6 @@
     "lint": "expo lint"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^3.0.2",
     "@react-navigation/bottom-tabs": "^7.15.5",
     "@react-navigation/elements": "^2.9.10",
     "@react-navigation/native": "^7.1.33",
@@ -25,6 +24,7 @@
     "expo-linking": "55.0.10-canary-20260328-bdc6273",
     "expo-router": "55.0.9-canary-20260328-bdc6273",
     "expo-splash-screen": "55.0.14-canary-20260328-bdc6273",
+    "expo-sqlite": "^55.0.11",
     "expo-status-bar": "55.0.5-canary-20260328-bdc6273",
     "expo-symbols": "55.0.6-canary-20260328-bdc6273",
     "expo-system-ui": "55.0.12-canary-20260328-bdc6273",

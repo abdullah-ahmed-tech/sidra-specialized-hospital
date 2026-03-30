@@ -1,15 +1,17 @@
-import { Text, View, StyleSheet } from "react-native";
-import { colors } from "../../constants/theme";
+import { StyleSheet, Text, View } from 'react-native';
+import { colors } from '../../constants/theme';
+
+interface SectionTitleProps {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+}
 
 export function SectionTitle({
   eyebrow,
   title,
   description,
-}: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-}) {
+}: SectionTitleProps) {
   return (
     <View style={styles.wrapper}>
       {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
@@ -26,14 +28,15 @@ const styles = StyleSheet.create({
   eyebrow: {
     color: colors.primary,
     fontSize: 12,
-    fontWeight: "700",
-    textTransform: "uppercase",
-    letterSpacing: 1.5,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 1.7,
   },
   title: {
     color: colors.text,
     fontSize: 28,
-    fontWeight: "800",
+    fontWeight: '800',
+    lineHeight: 36,
   },
   description: {
     color: colors.textMuted,

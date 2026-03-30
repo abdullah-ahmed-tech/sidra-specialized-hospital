@@ -1,3 +1,17 @@
+export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'DOCTOR' | 'PATIENT';
+
+export interface SessionUser {
+  id: string;
+  fullName: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface LoginResponse {
+  accessToken: string;
+  user: SessionUser;
+}
+
 export interface Department {
   id: string;
   name: string;
@@ -39,6 +53,21 @@ export interface Doctor {
   updatedAt: string;
   user: DoctorUser;
   department: DoctorDepartment;
+}
+
+export interface Service {
+  id: string;
+  departmentId: string;
+  name: string;
+  slug: string;
+  shortDescription?: string | null;
+  description?: string | null;
+  price?: string | number | null;
+  durationMinutes?: number | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  department: Department;
 }
 
 export interface AppointmentPayload {
